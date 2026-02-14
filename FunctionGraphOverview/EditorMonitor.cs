@@ -19,16 +19,17 @@ namespace FunctionGraphOverview
     {
         private static readonly Dictionary<string, string> LanguageMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            { ".c", "c" },
-            { ".cpp", "cpp" },
-            { ".cxx", "cpp" },
-            { ".cc", "cpp" },
-            { ".h", "cpp" },
-            { ".hpp", "cpp" },
-            { ".go", "go" },
-            { ".py", "python" },
-            { ".ts", "typescript" },
-            { ".js", "javascript" },
+            { ".c", "C" },
+            { ".cpp", "C++" },
+            { ".cxx", "C++" },
+            { ".cc", "C++" },
+            { ".h", "C++" },
+            { ".hpp", "C++" },
+            { ".go", "Go" },
+            { ".java", "Java" },
+            { ".py", "Python" },
+            { ".ts", "TypeScript" },
+            { ".tsx", "TSX" },
         };
 
         private readonly WebviewBridge _bridge;
