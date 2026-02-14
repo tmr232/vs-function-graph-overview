@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell;
@@ -47,9 +48,19 @@ namespace FunctionGraphOverview
                     webviewAssetsPath,
                     CoreWebView2HostResourceAccessKind.Allow);
 
+                webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+
+                var navigationTcs = new TaskCompletionSource<bool>();
+                void OnNavigationCompleted(object s, CoreWebView2NavigationCompletedEventArgs args)
+                {
+                    webView.CoreWebView2.NavigationCompleted -= OnNavigationCompleted;
+                    navigationTcs.TrySetResult(args.IsSuccess);
+                }
+                webView.CoreWebView2.NavigationCompleted += OnNavigationCompleted;
+
                 webView.CoreWebView2.Navigate("https://functiongraph.local/index.html");
 
-                webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+                await navigationTcs.Task;
 
                 _bridge = new WebviewBridge(webView);
                 _editorMonitor = new EditorMonitor(_bridge);

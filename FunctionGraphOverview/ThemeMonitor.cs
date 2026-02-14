@@ -38,22 +38,35 @@ namespace FunctionGraphOverview
 
             var bg = GetColor(EnvironmentColors.ToolWindowBackgroundColorKey);
             var fg = GetColor(EnvironmentColors.ToolWindowTextColorKey);
-            var panelBg = GetColor(EnvironmentColors.CommandBarGradientBeginColorKey);
             var highlight = GetColor(EnvironmentColors.SystemHighlightColorKey);
-            var highlightText = GetColor(EnvironmentColors.SystemHighlightTextColorKey);
+
+            var nodeDefault = isDark ? Lighten(bg, 0.1) : Darken(bg, 0.05);
+            var nodeBorder = isDark ? Lighten(bg, 0.25) : Darken(bg, 0.2);
+            var green = isDark ? Color.FromArgb(0x4E, 0xC9, 0xB0) : Color.FromArgb(0x00, 0x80, 0x00);
+            var red = isDark ? Color.FromArgb(0xD7, 0xBA, 0x7D) : Color.FromArgb(0xA3, 0x15, 0x15);
+            var darkRed = isDark ? Color.FromArgb(0xF4, 0x48, 0x47) : Color.FromArgb(0xCC, 0x00, 0x00);
+            var blue = isDark ? Color.FromArgb(0x0A, 0x9A, 0xCA) : Color.FromArgb(0x0A, 0x9A, 0xCA);
+            var clusterBorder = isDark ? Lighten(bg, 0.15) : Darken(bg, 0.15);
 
             return new List<ColorEntry>
             {
-                new ColorEntry("graph.background", ToHex(bg)),
-                new ColorEntry("node.default.background", ToHex(isDark ? Lighten(bg, 0.1) : Darken(bg, 0.05))),
-                new ColorEntry("node.default.border", ToHex(isDark ? Lighten(bg, 0.25) : Darken(bg, 0.2))),
-                new ColorEntry("node.highlight.background", ToHex(highlight)),
-                new ColorEntry("node.highlight.border", ToHex(isDark ? Lighten(highlight, 0.15) : Darken(highlight, 0.15))),
+                new ColorEntry("node.default", ToHex(nodeDefault)),
+                new ColorEntry("node.entry", ToHex(green)),
+                new ColorEntry("node.exit", ToHex(red)),
+                new ColorEntry("node.throw", ToHex(darkRed)),
+                new ColorEntry("node.yield", ToHex(blue)),
+                new ColorEntry("node.border", ToHex(nodeBorder)),
+                new ColorEntry("node.highlight", ToHex(highlight)),
                 new ColorEntry("edge.regular", ToHex(fg)),
-                new ColorEntry("edge.consequence", ToHex(isDark ? Color.FromArgb(0x4E, 0xC9, 0xB0) : Color.FromArgb(0x00, 0x80, 0x00))),
-                new ColorEntry("edge.alternative", ToHex(isDark ? Color.FromArgb(0xD7, 0xBA, 0x7D) : Color.FromArgb(0xA3, 0x15, 0x15))),
-                new ColorEntry("edge.exception", ToHex(isDark ? Color.FromArgb(0xF4, 0x48, 0x47) : Color.FromArgb(0xCC, 0x00, 0x00))),
-                new ColorEntry("text.default", ToHex(fg)),
+                new ColorEntry("edge.consequence", ToHex(green)),
+                new ColorEntry("edge.alternative", ToHex(red)),
+                new ColorEntry("cluster.border", ToHex(clusterBorder)),
+                new ColorEntry("cluster.with", ToHex(isDark ? Color.FromArgb(0x7D, 0x00, 0x7D) : Color.FromArgb(0x7D, 0x00, 0x7D))),
+                new ColorEntry("cluster.tryComplex", ToHex(isDark ? Color.FromArgb(0x34, 0x4C, 0x74) : Color.FromArgb(0x34, 0x4C, 0x74))),
+                new ColorEntry("cluster.try", ToHex(isDark ? Color.FromArgb(0x1B, 0x5F, 0x1B) : Color.FromArgb(0x1B, 0x5F, 0x1B))),
+                new ColorEntry("cluster.finally", ToHex(isDark ? Color.FromArgb(0x99, 0x99, 0x18) : Color.FromArgb(0x99, 0x99, 0x18))),
+                new ColorEntry("cluster.except", ToHex(isDark ? Color.FromArgb(0x59, 0x0C, 0x0C) : Color.FromArgb(0x59, 0x0C, 0x0C))),
+                new ColorEntry("graph.background", ToHex(bg)),
             };
         }
 

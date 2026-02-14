@@ -20,13 +20,16 @@ namespace FunctionGraphOverview
         {
             var jsCode = JsonSerializer.Serialize(code);
             var jsLang = JsonSerializer.Serialize(language);
-            await _webView.ExecuteScriptAsync($"document.alert('Hello, World!');");
+            await _webView.ExecuteScriptAsync(
+                $"console.log('[Bridge] SendCodeAsync called', typeof window.VisualStudio, typeof window.VisualStudio?.ToWebview?.setCode)");
             await _webView.ExecuteScriptAsync(
                 $"window.VisualStudio?.ToWebview?.setCode({jsCode}, {offset}, {jsLang})");
         }
 
         public async Task SendSettingsAsync(bool simplify, bool flatSwitch, bool highlight)
         {
+            await _webView.ExecuteScriptAsync(
+                $"console.log('[Bridge] SendSettingsAsync called')");
             await _webView.ExecuteScriptAsync(
                 $"window.VisualStudio?.ToWebview?.setSimplify({BoolToJs(simplify)})");
             await _webView.ExecuteScriptAsync(
@@ -38,6 +41,8 @@ namespace FunctionGraphOverview
         public async Task SendColorsAsync(string colorsJson)
         {
             var json = JsonSerializer.Serialize(colorsJson);
+            await _webView.ExecuteScriptAsync(
+                $"console.log('[Bridge] SendColorsAsync called')");
             await _webView.ExecuteScriptAsync(
                 $"window.VisualStudio?.ToWebview?.setColors({json})");
         }
