@@ -1,6 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Web.WebView2.Core;
 
 namespace FunctionGraphOverview
 {
@@ -15,6 +18,28 @@ namespace FunctionGraphOverview
         public ToolWindow1Control()
         {
             this.InitializeComponent();
+            InitializeWebViewAsync();
+        }
+
+        private async void InitializeWebViewAsync()
+        {
+            try
+            {
+                var userDataFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "FunctionGraphOverview");
+                var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
+                await webView.EnsureCoreWebView2Async(env);
+                webView.CoreWebView2.Navigate("https://tmr232.github.io/function-graph-overview");
+            }
+            catch (WebView2RuntimeNotFoundException)
+            {
+                MessageBox.Show(
+                    "The WebView2 Runtime is required. Please download it from:\nhttps://developer.microsoft.com/microsoft-edge/webview2/",
+                    "WebView2 Runtime Missing",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         /// <summary>

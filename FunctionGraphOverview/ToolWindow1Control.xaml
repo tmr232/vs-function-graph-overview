@@ -14,7 +14,7 @@
         <StackPanel Orientation="Vertical">
             <TextBlock Margin="10" HorizontalAlignment="Center"><Run Text="ToolWindow1"/></TextBlock>
             <Button Content="I AM A BUTTON!&#xD;&#xA;" Click="button1_Click" Width="120" Height="80" x:Name="button1"/>
-            <Wpf:WebView2 Height="162" Width="210" Source="https://tmr232.github.io/function-graph-overview"/>
+            <Wpf:WebView2 Height="162" Width="210" x:Name="webView"/>
         </StackPanel>
     </Grid>
 </UserControl>
