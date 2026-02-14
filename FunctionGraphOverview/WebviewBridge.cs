@@ -20,6 +20,7 @@ namespace FunctionGraphOverview
         {
             var jsCode = JsonSerializer.Serialize(code);
             var jsLang = JsonSerializer.Serialize(language);
+            await _webView.ExecuteScriptAsync($"document.alert('Hello, World!');");
             await _webView.ExecuteScriptAsync(
                 $"window.VisualStudio?.ToWebview?.setCode({jsCode}, {offset}, {jsLang})");
         }

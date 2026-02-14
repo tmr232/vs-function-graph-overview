@@ -49,7 +49,9 @@
     <Compile Include="FunctionGraphOverviewPackage.cs" />
     <Compile Include="ToolWindow1.cs" />
     <Compile Include="ToolWindow1Command.cs" />
-    <Compile Include="FunctionGraphOptions.cs" />
+    <Compile Include="FunctionGraphOptions.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EditorMonitor.cs" />
     <Compile Include="NavigationService.cs" />
     <Compile Include="ThemeMonitor.cs" />
