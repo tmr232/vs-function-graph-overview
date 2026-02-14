@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="FunctionGraphOverview.d266b8ec-2967-4f88-8e8b-628921c26350" Version="1.0" Language="en-US" Publisher="Tamir Bahar" />
     <DisplayName>FunctionGraphOverview</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Description>Displays a control flow graph for the function at the cursor position.</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">

@@ -27,6 +27,7 @@ namespace FunctionGraphOverview
     [Guid(FunctionGraphOverviewPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideToolWindow(typeof(ToolWindow1))]
+    [ProvideOptionPage(typeof(FunctionGraphOptions), "Function Graph Overview", "General", 0, 0, true)]
     public sealed class FunctionGraphOverviewPackage : AsyncPackage
     {
         /// <summary>

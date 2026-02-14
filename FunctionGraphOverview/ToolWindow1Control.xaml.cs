@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Reflection;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.Web.WebView2.Core;
 
 namespace FunctionGraphOverview
@@ -12,6 +14,12 @@ namespace FunctionGraphOverview
     /// </summary>
     public partial class ToolWindow1Control : UserControl
     {
+        private WebviewBridge _bridge;
+        private EditorMonitor _editorMonitor;
+        private ThemeMonitor _themeMonitor;
+
+        internal WebviewBridge Bridge => _bridge;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolWindow1Control"/> class.
         /// </summary>
@@ -30,7 +38,22 @@ namespace FunctionGraphOverview
                     "FunctionGraphOverview");
                 var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
                 await webView.EnsureCoreWebView2Async(env);
-                webView.CoreWebView2.Navigate("https://tmr232.github.io/function-graph-overview");
+
+                var extensionDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var webviewAssetsPath = Path.Combine(extensionDir, "WebviewAssets");
+
+                webView.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                    "functiongraph.local",
+                    webviewAssetsPath,
+                    CoreWebView2HostResourceAccessKind.Allow);
+
+                webView.CoreWebView2.Navigate("https://functiongraph.local/index.html");
+
+                webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+
+                _bridge = new WebviewBridge(webView);
+                _editorMonitor = new EditorMonitor(_bridge);
+                _themeMonitor = new ThemeMonitor(_bridge);
             }
             catch (WebView2RuntimeNotFoundException)
             {
@@ -42,18 +65,28 @@ namespace FunctionGraphOverview
             }
         }
 
-        /// <summary>
-        /// Handles click on the button by displaying a message box.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event args.</param>
-        [SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions", Justification = "Sample code")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void CoreWebView2_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
         {
-            MessageBox.Show(
-                string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
-                "ToolWindow1");
+            try
+            {
+                var messageString = e.TryGetWebMessageAsString();
+                using (var doc = JsonDocument.Parse(messageString))
+                {
+                    var root = doc.RootElement;
+                    if (root.TryGetProperty("tag", out var tagProp) &&
+                        tagProp.GetString() == "navigateTo" &&
+                        root.TryGetProperty("offset", out var offsetProp))
+                    {
+                        int offset = offsetProp.GetInt32();
+                        ThreadHelper.ThrowIfNotOnUIThread();
+                        NavigationService.NavigateToByteOffset(offset);
+                    }
+                }
+            }
+            catch
+            {
+                // Ignore malformed messages from the webview.
+            }
         }
     }
 }
