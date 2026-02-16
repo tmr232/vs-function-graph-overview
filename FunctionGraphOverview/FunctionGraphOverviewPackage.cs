@@ -26,7 +26,7 @@ namespace FunctionGraphOverview
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(FunctionGraphOverviewPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(ToolWindow1))]
+    [ProvideToolWindow(typeof(FunctionGraphToolWindow))]
     [ProvideOptionPage(typeof(FunctionGraphOptions), "Function Graph Overview", "General", 0, 0, true)]
     public sealed class FunctionGraphOverviewPackage : AsyncPackage
     {
@@ -49,7 +49,7 @@ namespace FunctionGraphOverview
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            await ToolWindow1Command.InitializeAsync(this);
+            await FunctionGraphToolWindowCommand.InitializeAsync(this);
         }
 
         #endregion

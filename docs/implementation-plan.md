@@ -50,7 +50,7 @@ computation.
 The project already has:
 - A working VSIX project targeting VS 2022 (17.x)
 - WebView2 NuGet package referenced
-- A tool window (`ToolWindow1`) with WebView2 control
+- A tool window (`FunctionGraphToolWindow`) with WebView2 control
 - WebView2 initialization with user-data-folder fix
 - Currently navigates to the hosted web app at `tmr232.github.io`
 
@@ -110,14 +110,14 @@ dependency — later steps may depend on earlier ones.
 its actual purpose.
 
 **Files to modify:**
-- `ToolWindow1Control.xaml` — Remove the `TextBlock` and `Button`; make the
+- `FunctionGraphToolWindowControl.xaml` — Remove the `TextBlock` and `Button`; make the
   `WebView2` fill the entire window (`HorizontalAlignment="Stretch"`,
   `VerticalAlignment="Stretch"`, remove fixed size)
-- `ToolWindow1Control.xaml.cs` — Remove `button1_Click` handler
-- `ToolWindow1.cs` — Change `Caption` from `"ToolWindow1"` to
+- `FunctionGraphToolWindowControl.xaml.cs` — Remove `button1_Click` handler
+- `FunctionGraphToolWindow.cs` — Change `Caption` from `"FunctionGraphToolWindow"` to
   `"Function Graph Overview"`
 - `FunctionGraphOverviewPackage.vsct` — Change `ButtonText` from
-  `"ToolWindow1"` to `"Function Graph Overview"`
+  `"FunctionGraphToolWindow"` to `"Function Graph Overview"`
 - `source.extension.vsixmanifest` — Update `Description` from
   `"Empty VSIX Project."` to something meaningful
 
@@ -138,7 +138,7 @@ navigating to a remote URL.
    (`index.js`, `index.css`, and any `.wasm` files) into `WebviewAssets/`.
 3. Include these files as `Content` in the `.csproj` with
    `CopyToOutputDirectory` and as VSIX content.
-4. In `ToolWindow1Control.xaml.cs`, replace the remote URL navigation with
+4. In `FunctionGraphToolWindowControl.xaml.cs`, replace the remote URL navigation with
    `CoreWebView2.SetVirtualHostNameToFolderMapping()` to map a virtual
    hostname (e.g., `functiongraph.local`) to the `WebviewAssets/` folder.
 5. Generate the host HTML page (similar to the VSCode extension's
@@ -271,7 +271,7 @@ namespace FunctionGraphOverview
 ```
 
 **Files to modify:**
-- `ToolWindow1Control.xaml.cs` — Create `WebviewBridge` after WebView2
+- `FunctionGraphToolWindowControl.xaml.cs` — Create `WebviewBridge` after WebView2
   initialization completes. Store it as a field for use by the editor monitor.
 
 **Verification:** After the webview loads, call `SendCodeAsync` with a hardcoded
@@ -285,7 +285,7 @@ snippet. Confirm the graph renders.
 cursor to the specified byte offset.
 
 **Tasks:**
-1. In `ToolWindow1Control.xaml.cs`, subscribe to
+1. In `FunctionGraphToolWindowControl.xaml.cs`, subscribe to
    `CoreWebView2.WebMessageReceived` after initialization.
 2. Parse the incoming JSON message, extract `tag` and `offset`.
 3. When `tag == "navigateTo"`:
@@ -456,8 +456,6 @@ structure).
 - Ensure the webview doesn't process stale messages when switching between files
   rapidly
 - Handle VS shutdown gracefully (dispose WebView2, unsubscribe from events)
-- Remove the `MessagePack` NuGet dependency (appears unused — it was likely
-  added during exploration)
 
 **Verification:** Exercise edge cases: close all editors, open non-supported
 files, rapidly switch between files, switch themes, resize the tool window.

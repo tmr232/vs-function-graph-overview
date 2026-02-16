@@ -8,7 +8,7 @@ Fixed three issues preventing the webview from rendering function graphs.
 
 ### 1. Race condition: scripts executed before page load
 
-**File:** `FunctionGraphOverview/ToolWindow1Control.xaml.cs`
+**File:** `FunctionGraphOverview/FunctionGraphToolWindowControl.xaml.cs`
 
 `InitializeWebViewAsync` created the `WebviewBridge`, `EditorMonitor`, and `ThemeMonitor` immediately after calling `Navigate()`, without waiting for the page to finish loading. Both `EditorMonitor` and `ThemeMonitor` call `ExecuteScriptAsync` in their constructors, but the page's JavaScript hadn't loaded yet so the calls had no effect.
 

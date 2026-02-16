@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
 
@@ -16,19 +16,19 @@ namespace FunctionGraphOverview
     /// </para>
     /// </remarks>
     [Guid("3e3c4155-f810-4018-9cbf-eb62bc0f1240")]
-    public class ToolWindow1 : ToolWindowPane
+    public class FunctionGraphToolWindow : ToolWindowPane
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToolWindow1"/> class.
+        /// Initializes a new instance of the <see cref="FunctionGraphToolWindow"/> class.
         /// </summary>
-        public ToolWindow1() : base(null)
+        public FunctionGraphToolWindow() : base(null)
         {
             this.Caption = "Function Graph Overview";
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            this.Content = new ToolWindow1Control();
+            this.Content = new FunctionGraphToolWindowControl();
         }
     }
 }

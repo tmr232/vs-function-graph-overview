@@ -11,9 +11,9 @@ using Microsoft.Web.WebView2.Core;
 namespace FunctionGraphOverview
 {
     /// <summary>
-    /// Interaction logic for ToolWindow1Control.
+    /// Interaction logic for FunctionGraphToolWindowControl.
     /// </summary>
-    public partial class ToolWindow1Control : UserControl
+    public partial class FunctionGraphToolWindowControl : UserControl
     {
         private WebviewBridge _bridge;
         private EditorMonitor _editorMonitor;
@@ -22,9 +22,9 @@ namespace FunctionGraphOverview
         internal WebviewBridge Bridge => _bridge;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToolWindow1Control"/> class.
+        /// Initializes a new instance of the <see cref="FunctionGraphToolWindowControl"/> class.
         /// </summary>
-        public ToolWindow1Control()
+        public FunctionGraphToolWindowControl()
         {
             this.InitializeComponent();
             InitializeWebViewAsync();
