@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="EditorMonitor.cs" />
     <Compile Include="NavigationService.cs" />
+    <Compile Include="SettingsMonitor.cs" />
     <Compile Include="ThemeMonitor.cs" />
     <Compile Include="WebviewBridge.cs" />
     <Compile Include="FunctionGraphToolWindowControl.xaml.cs">

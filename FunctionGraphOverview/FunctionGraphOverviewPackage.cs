@@ -42,6 +42,11 @@ namespace FunctionGraphOverview
         /// </summary>
         public const string PackageGuidString = "93ad872a-838e-4ce3-9df0-580e738dcd8c";
 
+        public static FunctionGraphOverviewPackage Instance { get; private set; }
+
+        public FunctionGraphOptions Options =>
+            (FunctionGraphOptions)GetDialogPage(typeof(FunctionGraphOptions));
+
         #region Package Members
 
         /// <summary>
@@ -59,6 +64,7 @@ namespace FunctionGraphOverview
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            Instance = this;
             await FunctionGraphToolWindowCommand.InitializeAsync(this);
         }
 
