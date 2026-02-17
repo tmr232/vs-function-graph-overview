@@ -105,9 +105,9 @@ namespace FunctionGraphOverview
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Ignore malformed messages from the webview.
+                LogService.Log(ex);
             }
         }
 
