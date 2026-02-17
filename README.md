@@ -73,3 +73,31 @@ project. To update them:
 
 1. Clone and build the webview project (`bun run build-webview`).
 2. Copy the contents of `dist/webview/assets/` into `WebviewAssets/assets/`.
+
+## CI / CD
+
+GitHub Actions workflows live in `.github/workflows/`:
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `build.yml` | Push to `main`, PRs | Builds the webview from [function-graph-overview](https://github.com/tmr232/function-graph-overview) and compiles the VSIX |
+| `release.yml` | GitHub release published | Builds, publishes to the VS Marketplace, and uploads the VSIX as a release asset |
+
+The webview is checked out from a dedicated `visualstudio-*` tag in the
+function-graph-overview repo (mirroring the `jetbrains-*` tags used by the
+[JetBrains plugin](https://github.com/tmr232/jb-function-graph-overview)).
+
+### Workflow security
+
+- **[ratchet](https://github.com/sethvargo/ratchet)** — all action references
+  are pinned to commit SHAs (with version comments for readability).
+  Run `ratchet pin <workflow>` after adding or updating an action.
+- **[zizmor](https://github.com/zizmorcore/zizmor)** — static analysis for
+  GitHub Actions. Runs as a [pre-commit](https://pre-commit.com/) hook via
+  [zizmor-pre-commit](https://github.com/zizmorcore/zizmor-pre-commit) to catch
+  issues like unpinned actions, excessive permissions, and template injection.
+
+### Code formatting
+
+- **[CSharpier](https://csharpier.com/)** — opinionated C# formatter, runs as a
+  pre-commit hook via `dotnet tool run csharpier`.
