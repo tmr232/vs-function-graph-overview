@@ -38,11 +38,13 @@ namespace FunctionGraphOverview
             if (_options == null)
                 return;
 
-            _ = _bridge.SendSettingsAsync(
-                _options.Simplify,
-                _options.FlatSwitch,
-                _options.HighlightCurrentNode
-            );
+            _bridge
+                .SendSettingsAsync(
+                    _options.Simplify,
+                    _options.FlatSwitch,
+                    _options.HighlightCurrentNode
+                )
+                .FireAndForget();
         }
 
         public void Dispose()

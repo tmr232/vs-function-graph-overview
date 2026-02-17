@@ -41,7 +41,7 @@ namespace FunctionGraphOverview
                     var customJson = options?.CustomColorSchemeJson;
                     if (!string.IsNullOrWhiteSpace(customJson))
                     {
-                        _ = _bridge.SendColorsAsync(customJson);
+                        _bridge.SendColorsAsync(customJson).FireAndForget();
                         return;
                     }
                     // Fall back to system if custom JSON is empty.
@@ -58,7 +58,7 @@ namespace FunctionGraphOverview
 
             var envelope = new { version = 1, scheme = colors };
             var json = JsonSerializer.Serialize(envelope);
-            _ = _bridge.SendColorsAsync(json);
+            _bridge.SendColorsAsync(json).FireAndForget();
         }
 
         internal static bool IsDarkTheme()

@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
-using Microsoft.VisualStudio.Threading;
 using IServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
 namespace FunctionGraphOverview
@@ -164,13 +163,7 @@ namespace FunctionGraphOverview
             var textBeforeCaret = snapshot.GetText(0, caretPosition.Position);
             var byteOffset = Encoding.UTF8.GetByteCount(textBeforeCaret);
 
-            // TODO: Actually await the task!
-            ThreadHelper.JoinableTaskFactory.Run(
-                async delegate
-                {
-                    _ = _bridge.SendCodeAsync(text, byteOffset, language);
-                }
-            );
+            _bridge.SendCodeAsync(text, byteOffset, language).FireAndForget();
         }
 
         #region IVsRunningDocTableEvents
