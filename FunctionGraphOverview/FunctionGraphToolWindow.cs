@@ -21,7 +21,8 @@ namespace FunctionGraphOverview
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionGraphToolWindow"/> class.
         /// </summary>
-        public FunctionGraphToolWindow() : base(null)
+        public FunctionGraphToolWindow()
+            : base(null)
         {
             this.Caption = "Function Graph Overview";
 

@@ -16,7 +16,8 @@ namespace FunctionGraphOverview
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            var textManager = (IVsTextManager)ServiceProvider.GlobalProvider.GetService(typeof(SVsTextManager));
+            var textManager = (IVsTextManager)
+                ServiceProvider.GlobalProvider.GetService(typeof(SVsTextManager));
             if (textManager == null)
                 return;
 

@@ -17,7 +17,10 @@ namespace FunctionGraphOverview
 {
     internal sealed class EditorMonitor : IDisposable, IVsRunningDocTableEvents
     {
-        private static readonly Dictionary<string, string> LanguageMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, string> LanguageMap = new Dictionary<
+            string,
+            string
+        >(StringComparer.OrdinalIgnoreCase)
         {
             { ".c", "C" },
             { ".cpp", "C++" },
@@ -50,21 +53,22 @@ namespace FunctionGraphOverview
 
             _textManager = (IVsTextManager)Package.GetGlobalService(typeof(SVsTextManager));
 
-            var oleServiceProvider = (IServiceProvider)Package.GetGlobalService(typeof(IServiceProvider));
+            var oleServiceProvider = (IServiceProvider)
+                Package.GetGlobalService(typeof(IServiceProvider));
             var shell = (IVsShell)Package.GetGlobalService(typeof(SVsShell));
 
             // Get IVsEditorAdaptersFactoryService via the component model
             var componentModel = (Microsoft.VisualStudio.ComponentModelHost.IComponentModel)
-                Package.GetGlobalService(typeof(Microsoft.VisualStudio.ComponentModelHost.SComponentModel));
+                Package.GetGlobalService(
+                    typeof(Microsoft.VisualStudio.ComponentModelHost.SComponentModel)
+                );
             _editorAdaptersFactory = componentModel.GetService<IVsEditorAdaptersFactoryService>();
 
-            _rdt = (IVsRunningDocumentTable)Package.GetGlobalService(typeof(SVsRunningDocumentTable));
+            _rdt = (IVsRunningDocumentTable)
+                Package.GetGlobalService(typeof(SVsRunningDocumentTable));
             _rdt.AdviseRunningDocTableEvents(this, out _rdtCookie);
 
-            _debounceTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(100)
-            };
+            _debounceTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
             _debounceTimer.Tick += OnDebounceTimerTick;
 
             AttachToActiveView();
@@ -141,8 +145,10 @@ namespace FunctionGraphOverview
             if (_currentView == null || _currentView.IsClosed)
                 return;
 
-            var document = _currentView.TextDataModel?.DocumentBuffer?.Properties
-                .GetProperty<ITextDocument>(typeof(ITextDocument));
+            var document =
+                _currentView.TextDataModel?.DocumentBuffer?.Properties.GetProperty<ITextDocument>(
+                    typeof(ITextDocument)
+                );
             if (document == null)
                 return;
 
@@ -159,20 +165,32 @@ namespace FunctionGraphOverview
             var byteOffset = Encoding.UTF8.GetByteCount(textBeforeCaret);
 
             // TODO: Actually await the task!
-            ThreadHelper.JoinableTaskFactory.Run(async delegate
-            {
-                _ = _bridge.SendCodeAsync(text, byteOffset, language);
-            });
+            ThreadHelper.JoinableTaskFactory.Run(
+                async delegate
+                {
+                    _ = _bridge.SendCodeAsync(text, byteOffset, language);
+                }
+            );
         }
 
         #region IVsRunningDocTableEvents
 
-        public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        public int OnAfterFirstDocumentLock(
+            uint docCookie,
+            uint dwRDTLockType,
+            uint dwReadLocksRemaining,
+            uint dwEditLocksRemaining
+        )
         {
             return VSConstants.S_OK;
         }
 
-        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        public int OnBeforeLastDocumentUnlock(
+            uint docCookie,
+            uint dwRDTLockType,
+            uint dwReadLocksRemaining,
+            uint dwEditLocksRemaining
+        )
         {
             return VSConstants.S_OK;
         }

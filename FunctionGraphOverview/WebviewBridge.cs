@@ -21,24 +21,27 @@ namespace FunctionGraphOverview
             var jsCode = JsonSerializer.Serialize(code);
             var jsLang = JsonSerializer.Serialize(language);
             await _webView.ExecuteScriptAsync(
-                $"window.VisualStudio?.ToWebview?.setCode({jsCode}, {offset}, {jsLang})");
+                $"window.VisualStudio?.ToWebview?.setCode({jsCode}, {offset}, {jsLang})"
+            );
         }
 
         public async Task SendSettingsAsync(bool simplify, bool flatSwitch, bool highlight)
         {
             await _webView.ExecuteScriptAsync(
-                $"window.VisualStudio?.ToWebview?.setSimplify({BoolToJs(simplify)})");
+                $"window.VisualStudio?.ToWebview?.setSimplify({BoolToJs(simplify)})"
+            );
             await _webView.ExecuteScriptAsync(
-                $"window.VisualStudio?.ToWebview?.setFlatSwitch({BoolToJs(flatSwitch)})");
+                $"window.VisualStudio?.ToWebview?.setFlatSwitch({BoolToJs(flatSwitch)})"
+            );
             await _webView.ExecuteScriptAsync(
-                $"window.VisualStudio?.ToWebview?.setHighlight({BoolToJs(highlight)})");
+                $"window.VisualStudio?.ToWebview?.setHighlight({BoolToJs(highlight)})"
+            );
         }
 
         public async Task SendColorsAsync(string colorsJson)
         {
             var json = JsonSerializer.Serialize(colorsJson);
-            await _webView.ExecuteScriptAsync(
-                $"window.VisualStudio?.ToWebview?.setColors({json})");
+            await _webView.ExecuteScriptAsync($"window.VisualStudio?.ToWebview?.setColors({json})");
         }
 
         private static string BoolToJs(bool v) => v ? "true" : "false";

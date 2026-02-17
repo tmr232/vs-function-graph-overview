@@ -33,10 +33,14 @@ namespace FunctionGraphOverview
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private FunctionGraphToolWindowCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private FunctionGraphToolWindowCommand(
+            AsyncPackage package,
+            OleMenuCommandService commandService
+        )
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
-            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
+            commandService =
+                commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
@@ -46,21 +50,14 @@ namespace FunctionGraphOverview
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static FunctionGraphToolWindowCommand Instance
-        {
-            get;
-            private set;
-        }
+        public static FunctionGraphToolWindowCommand Instance { get; private set; }
 
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
         private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
         {
-            get
-            {
-                return this.package;
-            }
+            get { return this.package; }
         }
 
         /// <summary>
@@ -73,7 +70,8 @@ namespace FunctionGraphOverview
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            OleMenuCommandService commandService =
+                await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new FunctionGraphToolWindowCommand(package, commandService);
         }
 
@@ -89,7 +87,11 @@ namespace FunctionGraphOverview
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
             // The last flag is set to true so that if the tool window does not exists it will be created.
-            ToolWindowPane window = this.package.FindToolWindow(typeof(FunctionGraphToolWindow), 0, true);
+            ToolWindowPane window = this.package.FindToolWindow(
+                typeof(FunctionGraphToolWindow),
+                0,
+                true
+            );
             if ((null == window) || (null == window.Frame))
             {
                 throw new NotSupportedException("Cannot create tool window");

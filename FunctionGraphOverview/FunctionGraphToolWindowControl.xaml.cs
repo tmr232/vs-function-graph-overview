@@ -36,7 +36,8 @@ namespace FunctionGraphOverview
             {
                 var userDataFolder = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "FunctionGraphOverview");
+                    "FunctionGraphOverview"
+                );
                 var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
                 await webView.EnsureCoreWebView2Async(env);
 
@@ -46,7 +47,8 @@ namespace FunctionGraphOverview
                 webView.CoreWebView2.SetVirtualHostNameToFolderMapping(
                     "functiongraph.local",
                     webviewAssetsPath,
-                    CoreWebView2HostResourceAccessKind.Allow);
+                    CoreWebView2HostResourceAccessKind.Allow
+                );
 
                 webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
 
@@ -72,11 +74,15 @@ namespace FunctionGraphOverview
                     "The WebView2 Runtime is required. Please download it from:\nhttps://developer.microsoft.com/microsoft-edge/webview2/",
                     "WebView2 Runtime Missing",
                     MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                    MessageBoxImage.Error
+                );
             }
         }
 
-        private void CoreWebView2_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
+        private void CoreWebView2_WebMessageReceived(
+            object sender,
+            CoreWebView2WebMessageReceivedEventArgs e
+        )
         {
             try
             {
@@ -84,9 +90,11 @@ namespace FunctionGraphOverview
                 using (var doc = JsonDocument.Parse(messageString))
                 {
                     var root = doc.RootElement;
-                    if (root.TryGetProperty("tag", out var tagProp) &&
-                        tagProp.GetString() == "navigateTo" &&
-                        root.TryGetProperty("offset", out var offsetProp))
+                    if (
+                        root.TryGetProperty("tag", out var tagProp)
+                        && tagProp.GetString() == "navigateTo"
+                        && root.TryGetProperty("offset", out var offsetProp)
+                    )
                     {
                         int offset = offsetProp.GetInt32();
                         ThreadHelper.ThrowIfNotOnUIThread();
