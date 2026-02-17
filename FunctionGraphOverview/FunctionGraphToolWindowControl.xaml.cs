@@ -68,7 +68,7 @@ namespace FunctionGraphOverview
                 _bridge = new WebviewBridge(webView);
                 _editorMonitor = new EditorMonitor(_bridge);
                 _themeMonitor = new ThemeMonitor(_bridge);
-                _settingsMonitor = new SettingsMonitor(_bridge);
+                _settingsMonitor = new SettingsMonitor(_bridge, _themeMonitor);
             }
             catch (WebView2RuntimeNotFoundException)
             {

@@ -25,6 +25,19 @@ namespace FunctionGraphOverview
         [Description("Highlight the CFG node at cursor position")]
         public bool HighlightCurrentNode { get; set; } = true;
 
+        [Category("Function Graph Overview")]
+        [DisplayName("Color Scheme")]
+        [Description("Dark, Light, System (follows IDE theme), or Custom (paste JSON)")]
+        [TypeConverter(typeof(EnumConverter))]
+        public ColorSchemeMode ColorSchemeMode { get; set; } = ColorSchemeMode.System;
+
+        [Category("Function Graph Overview")]
+        [DisplayName("Custom Color Scheme JSON")]
+        [Description(
+            "Paste a color scheme JSON string (used when Color Scheme is Custom). Format: {\"version\":1,\"scheme\":[{\"name\":\"...\",\"hex\":\"#...\"},...]}"
+        )]
+        public string CustomColorSchemeJson { get; set; } = "";
+
         protected override void OnApply(PageApplyEventArgs e)
         {
             base.OnApply(e);

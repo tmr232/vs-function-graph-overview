@@ -11,8 +11,11 @@ webview SPA.
   graph for the function under the cursor as you navigate your code.
 - **Click-to-navigate** — click a node in the graph to jump to the
   corresponding source location.
-- **Theme integration** — graph colors adapt to the current Visual Studio color
-  theme (Light, Dark, Blue).
+- **Color scheme** — choose between Dark, Light, System (follows IDE theme), or
+  Custom (paste your own color scheme JSON) via Tools → Options → Function Graph
+  Overview. Dark and Light schemes use the canonical
+  [function-graph-overview](https://github.com/tmr232/function-graph-overview)
+  colors with VS-appropriate backgrounds.
 - **Configurable** — toggle simplification, flat switch rendering, and current
   node highlighting via Tools → Options → Function Graph Overview.
 

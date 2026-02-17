@@ -7,13 +7,15 @@ namespace FunctionGraphOverview
     {
         private readonly WebviewBridge _bridge;
         private readonly FunctionGraphOptions _options;
+        private readonly ThemeMonitor _themeMonitor;
         private bool _disposed;
 
-        public SettingsMonitor(WebviewBridge bridge)
+        public SettingsMonitor(WebviewBridge bridge, ThemeMonitor themeMonitor)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
             _bridge = bridge;
+            _themeMonitor = themeMonitor;
 
             _options = FunctionGraphOverviewPackage.Instance?.Options;
 
@@ -28,6 +30,7 @@ namespace FunctionGraphOverview
         private void OnSettingsChanged(object sender, EventArgs e)
         {
             SendSettings();
+            _themeMonitor?.SendColors();
         }
 
         private void SendSettings()
