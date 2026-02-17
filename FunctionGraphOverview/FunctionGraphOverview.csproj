@@ -118,7 +118,6 @@
     <VSCTCompile Include="FunctionGraphOverviewPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
-    <Content Include="Resources\FunctionGraphToolWindowCommand.png" />
     <Content Include="WebviewAssets\**\*">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
