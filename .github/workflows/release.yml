@@ -4,22 +4,26 @@ on:
   release:
     types: [prereleased, released]
 
+permissions: {}
+
 jobs:
   build-webview:
     name: Build Webview
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # ratchet:actions/checkout@v4
         with:
           repository: tmr232/function-graph-overview
           ref: "visualstudio-0.0.1"
+          persist-credentials: false
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # ratchet:oven-sh/setup-bun@v2
 
       - run: bun install
       - run: bun build-webview
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # ratchet:actions/upload-artifact@v4
         with:
           name: webview
           path: "./dist/webview/"
@@ -32,21 +36,22 @@ jobs:
       contents: write
     steps:
       - name: Fetch Sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # ratchet:actions/checkout@v4
         with:
           ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
 
       - name: Fetch Webview
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # ratchet:actions/download-artifact@v4
         with:
           name: webview
           path: FunctionGraphOverview/WebviewAssets
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # ratchet:microsoft/setup-msbuild@v2
 
       - name: Setup NuGet
-        uses: nuget/setup-nuget@v2
+        uses: nuget/setup-nuget@323ab0502cd38fdc493335025a96c8fdb0edc71f # ratchet:nuget/setup-nuget@v2
 
       - name: Restore NuGet Packages
         run: nuget restore vs-function-graph-overview.sln
@@ -65,4 +70,5 @@ jobs:
       - name: Upload Release Asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} FunctionGraphOverview/bin/Release/FunctionGraphOverview.vsix
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$env:RELEASE_TAG" FunctionGraphOverview/bin/Release/FunctionGraphOverview.vsix
