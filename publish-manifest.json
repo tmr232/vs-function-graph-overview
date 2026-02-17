@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json.schemastore.org/vsix-publish",
+  "identity": {
+    "internalName": "FunctionGraphOverview"
+  },
+  "categories": [
+    "coding"
+  ],
+  "overview": "README.md",
+  "repo": "https://github.com/tmr232/vs-function-graph-overview"
+}
