@@ -13,12 +13,13 @@ namespace FunctionGraphOverview
     /// <summary>
     /// Interaction logic for FunctionGraphToolWindowControl.
     /// </summary>
-    public partial class FunctionGraphToolWindowControl : UserControl
+    public partial class FunctionGraphToolWindowControl : UserControl, IDisposable
     {
         private WebviewBridge _bridge;
         private EditorMonitor _editorMonitor;
         private ThemeMonitor _themeMonitor;
         private SettingsMonitor _settingsMonitor;
+        private bool _disposed;
 
         internal WebviewBridge Bridge => _bridge;
 
@@ -108,6 +109,19 @@ namespace FunctionGraphOverview
             {
                 // Ignore malformed messages from the webview.
             }
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+
+            _disposed = true;
+
+            _settingsMonitor?.Dispose();
+            _editorMonitor?.Dispose();
+            _themeMonitor?.Dispose();
+            webView?.Dispose();
         }
     }
 }
