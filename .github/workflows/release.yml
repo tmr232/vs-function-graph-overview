@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  release:
+    types: [prereleased, released]
+
+jobs:
+  build-webview:
+    name: Build Webview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: tmr232/function-graph-overview
+          ref: "visualstudio-0.0.1"
+
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+      - run: bun build-webview
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: webview
+          path: "./dist/webview/"
+
+  release:
+    name: Build & Publish
+    runs-on: windows-latest
+    needs: [build-webview]
+    permissions:
+      contents: write
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Fetch Webview
+        uses: actions/download-artifact@v4
+        with:
+          name: webview
+          path: FunctionGraphOverview/WebviewAssets
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v2
+
+      - name: Restore NuGet Packages
+        run: nuget restore vs-function-graph-overview.sln
+
+      - name: Build Solution
+        run: msbuild vs-function-graph-overview.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Publish to VS Marketplace
+        run: |
+          & "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\VSSDK\VisualStudioIntegration\Tools\Bin\VsixPublisher.exe" `
+            publish `
+            -payload "FunctionGraphOverview\bin\Release\FunctionGraphOverview.vsix" `
+            -publishManifest "publish-manifest.json" `
+            -personalAccessToken "${{ secrets.VS_MARKETPLACE_PAT }}"
+
+      - name: Upload Release Asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} FunctionGraphOverview/bin/Release/FunctionGraphOverview.vsix
