@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Wpf;
@@ -38,10 +39,19 @@ namespace FunctionGraphOverview
             );
         }
 
-        public async Task SendColorsAsync(string colorsJson)
+        public async Task SendColorsAsync(
+            string colorsJson,
+            bool isDark,
+            string backgroundColor,
+            string foregroundColor
+        )
         {
             var json = JsonSerializer.Serialize(colorsJson);
-            await _webView.ExecuteScriptAsync($"window.VisualStudio?.ToWebview?.setColors({json})");
+            var jsBackgroundColor = JsonSerializer.Serialize(backgroundColor);
+            var jsForegroundColor = JsonSerializer.Serialize(foregroundColor);
+            await _webView.ExecuteScriptAsync(
+                $"window.VisualStudio?.ToWebview?.setColors({json}, {BoolToJs(isDark)}, {jsBackgroundColor}, {jsForegroundColor})"
+            );
         }
 
         private static string BoolToJs(bool v) => v ? "true" : "false";

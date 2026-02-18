@@ -23,11 +23,10 @@ namespace FunctionGraphOverview
             SendColors();
         }
 
-        public void SendColors()
+        private string getColorsJson()
         {
             var options = FunctionGraphOverviewPackage.Instance?.Options;
             var mode = options?.ColorSchemeMode ?? ColorSchemeMode.System;
-
             List<ColorEntry> colors;
             switch (mode)
             {
@@ -41,14 +40,10 @@ namespace FunctionGraphOverview
                     var customJson = options?.CustomColorSchemeJson;
                     if (!string.IsNullOrWhiteSpace(customJson))
                     {
-                        _bridge.SendColorsAsync(customJson).FireAndForget();
-                        return;
+                        return customJson;
                     }
                     // Fall back to system if custom JSON is empty.
-                    colors = IsDarkTheme()
-                        ? ColorSchemeDefinitions.GetDarkScheme()
-                        : ColorSchemeDefinitions.GetLightScheme();
-                    break;
+                    goto default;
                 default: // System
                     colors = IsDarkTheme()
                         ? ColorSchemeDefinitions.GetDarkScheme()
@@ -58,7 +53,27 @@ namespace FunctionGraphOverview
 
             var envelope = new { version = 1, scheme = colors };
             var json = JsonSerializer.Serialize(envelope);
-            _bridge.SendColorsAsync(json).FireAndForget();
+            return json;
+        }
+
+        public void SendColors()
+        {
+            var json = getColorsJson();
+            _bridge
+                .SendColorsAsync(
+                    json,
+                    IsDarkTheme(),
+                    getHtmlColor(EnvironmentColors.ToolWindowBackgroundColorKey),
+                    getHtmlColor(EnvironmentColors.ToolWindowTextColorKey)
+                )
+                .FireAndForget();
+        }
+
+        internal static string getHtmlColor(ThemeResourceKey themeResourceKey)
+        {
+            return System.Drawing.ColorTranslator.ToHtml(
+                VSColorTheme.GetThemedColor(themeResourceKey)
+            );
         }
 
         internal static bool IsDarkTheme()
