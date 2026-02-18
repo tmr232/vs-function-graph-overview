@@ -53,6 +53,46 @@ jobs:
       - name: Setup NuGet
         uses: nuget/setup-nuget@323ab0502cd38fdc493335025a96c8fdb0edc71f # ratchet:nuget/setup-nuget@v2
 
+      - name: Stamp versions from release tag
+        shell: pwsh
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          $tag = $env:RELEASE_TAG.Trim()
+
+          if ($tag -match '(\d+\.\d+\.\d+(?:\.\d+)?)') {
+            $vsixVersion = $Matches[1]
+          } else {
+            throw "Release tag '$tag' does not contain a valid version like 1.2.3 or 1.2.3.4"
+          }
+
+          $parts = $vsixVersion.Split('.')
+          if ($parts.Count -eq 3) {
+            $asmVersion = "$vsixVersion.0"
+          } elseif ($parts.Count -eq 4) {
+            $asmVersion = $vsixVersion
+          } else {
+            throw "Parsed version '$vsixVersion' is not 3- or 4-part."
+          }
+
+          Write-Host "Stamping VSIX version: $vsixVersion"
+          Write-Host "Stamping assembly version: $asmVersion"
+
+          $assemblyInfoPath = "FunctionGraphOverview\Properties\AssemblyInfo.cs"
+          $assemblyInfo = Get-Content $assemblyInfoPath -Raw
+          $assemblyInfo = $assemblyInfo -replace 'AssemblyVersion\(".*?"\)', "AssemblyVersion(`"$asmVersion`")"
+          $assemblyInfo = $assemblyInfo -replace 'AssemblyFileVersion\(".*?"\)', "AssemblyFileVersion(`"$asmVersion`")"
+          Set-Content -Path $assemblyInfoPath -Value $assemblyInfo -Encoding UTF8
+
+          $manifestPath = "FunctionGraphOverview\source.extension.vsixmanifest"
+          [xml]$xml = Get-Content $manifestPath
+          $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+          $ns.AddNamespace("x", "http://schemas.microsoft.com/developer/vsx-schema/2011")
+          $identity = $xml.SelectSingleNode("//x:Identity", $ns)
+          if (-not $identity) { throw "Could not find <Identity> node in $manifestPath" }
+          $identity.SetAttribute("Version", $vsixVersion)
+          $xml.Save($manifestPath)
+
       - name: Restore NuGet Packages
         run: nuget restore vs-function-graph-overview.sln
 

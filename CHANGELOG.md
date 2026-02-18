@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `Microsoft.VisualStudio.SDK.Analyzers` for compile-time threading checks (#4.1)
 - `.editorconfig` with C# naming and style conventions (#4.2)
 - `CHANGELOG.md` (#7.1)
+- Automated version stamping: VSIX and assembly versions are derived from the
+  release tag in CI (#6.1)
 
 ### Fixed
 - VSIX build error VSSDK1310: added MIT license file to VSIX package and
