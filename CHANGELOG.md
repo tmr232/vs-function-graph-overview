@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Unit test project (`FunctionGraphOverview.Tests`) with xUnit covering
+  `NavigationService.Utf8ByteOffsetToCharOffset`, `ColorSchemeDefinitions`, and
+  `LanguageMap` (#8.1)
+- Tests run automatically in CI via `dotnet test` (#8.2)
 - Output Window logging pane ("Function Graph Overview") for diagnostics (#2.1)
 - ARM64 support — the extension now installs natively on ARM64 VS 2022 (#3.1)
 - Marketplace metadata: tags, license, release notes, repo link (#3.2)

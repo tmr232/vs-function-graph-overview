@@ -62,6 +62,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EditorMonitor.cs" />
+    <Compile Include="LanguageMap.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="NavigationService.cs" />
     <Compile Include="SettingsMonitor.cs" />

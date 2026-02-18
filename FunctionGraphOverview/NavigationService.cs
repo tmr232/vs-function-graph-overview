@@ -44,7 +44,7 @@ namespace FunctionGraphOverview
             activeView.CenterLines(line, 1);
         }
 
-        private static int Utf8ByteOffsetToCharOffset(string text, int byteOffset)
+        internal static int Utf8ByteOffsetToCharOffset(string text, int byteOffset)
         {
             var bytes = Encoding.UTF8.GetBytes(text);
             if (byteOffset < 0 || byteOffset > bytes.Length)

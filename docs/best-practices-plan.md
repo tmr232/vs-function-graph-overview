@@ -99,7 +99,7 @@ After completing each task below:
 
 ## 8. Testing
 
-- [ ] **8.1 — Add a unit test project**
+- [x] **8.1 — Add a unit test project**
   Create `FunctionGraphOverview.Tests` (xUnit). Start with pure-logic tests:
   - `NavigationService.Utf8ByteOffsetToCharOffset` (extract to `internal` +
     `InternalsVisibleTo`)
@@ -107,5 +107,5 @@ After completing each task below:
     expected color count and names
   - `EditorMonitor.LanguageMap` — verify extension → language mapping
 
-- [ ] **8.2 — Run tests in CI**
+- [x] **8.2 — Run tests in CI**
   Add a `dotnet test` step to `build.yml` after the MSBuild step.

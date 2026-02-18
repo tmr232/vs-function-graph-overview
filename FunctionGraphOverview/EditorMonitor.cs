@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Threading;
@@ -16,24 +15,6 @@ namespace FunctionGraphOverview
 {
     internal sealed class EditorMonitor : IDisposable, IVsRunningDocTableEvents
     {
-        private static readonly Dictionary<string, string> LanguageMap = new Dictionary<
-            string,
-            string
-        >(StringComparer.OrdinalIgnoreCase)
-        {
-            { ".c", "C" },
-            { ".cpp", "C++" },
-            { ".cxx", "C++" },
-            { ".cc", "C++" },
-            { ".h", "C++" },
-            { ".hpp", "C++" },
-            { ".go", "Go" },
-            { ".java", "Java" },
-            { ".py", "Python" },
-            { ".ts", "TypeScript" },
-            { ".tsx", "TSX" },
-        };
-
         private readonly WebviewBridge _bridge;
         private readonly IVsTextManager _textManager;
         private readonly IVsEditorAdaptersFactoryService _editorAdaptersFactory;
@@ -153,7 +134,7 @@ namespace FunctionGraphOverview
 
             var filePath = document.FilePath;
             var ext = Path.GetExtension(filePath);
-            if (!LanguageMap.TryGetValue(ext, out var language))
+            if (!FunctionGraphOverview.LanguageMap.TryGetLanguage(ext, out var language))
                 return;
 
             var snapshot = _currentView.TextSnapshot;
