@@ -4,10 +4,10 @@
     <Identity Id="FunctionGraphOverview.d266b8ec-2967-4f88-8e8b-628921c26350" Version="1.0" Language="en-US" Publisher="Tamir Bahar" />
     <DisplayName>FunctionGraphOverview</DisplayName>
     <Description>Displays a control flow graph for the function at the cursor position.</Description>
-    <Tags>cfg, control flow, graph, code visualization</Tags>
+    <MoreInfo>https://github.com/tmr232/vs-function-graph-overview</MoreInfo>
     <License>LICENSE.txt</License>
     <ReleaseNotes>https://github.com/tmr232/vs-function-graph-overview/releases</ReleaseNotes>
-    <MoreInfo>https://github.com/tmr232/vs-function-graph-overview</MoreInfo>
+    <Tags>cfg, control flow, graph, code visualization</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">

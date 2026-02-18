@@ -20,11 +20,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `CHANGELOG.md` (#7.1)
 
 ### Fixed
+- VSIX build error VSSDK1310: added MIT license file to VSIX package and
+  reordered manifest metadata to satisfy schema validation
+- Command icon: use `Include href="KnownImageIds.vsct"` instead of
+  `Extern href="KnownImageIds.h"` and switch to `ControlFlow` moniker
 - Added missing `publish-manifest.json` required by the release workflow (#1.1)
 - Fire-and-forget async calls now log errors instead of silently failing (#1.2)
 - WebView2 control and monitors are now properly disposed (#1.3)
 - Silent `catch` block in webview message handler now logs exceptions (#2.2)
 
 ### Changed
-- Command icon switched from bitmap strip to `KnownMonikers.FlowChart` for
+- Command icon switched from bitmap strip to `KnownMonikers.ControlFlow` for
   proper DPI scaling and theme support (#5.1)

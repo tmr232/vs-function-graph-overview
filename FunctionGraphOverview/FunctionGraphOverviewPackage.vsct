@@ -3,13 +3,15 @@
 
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
-  <Extern href="KnownImageIds.h"/>
+
+  <!--  Include the definitions for images included in the VS image catalog -->
+  <Include href="KnownImageIds.vsct"/>
 
   <Commands package="guidFunctionGraphOverviewPackage">
     <Buttons>
       <Button guid="guidFunctionGraphOverviewPackageCmdSet" id="FunctionGraphToolWindowCommandId" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <Icon guid="ImageCatalogGuid" id="FlowChart" />
+        <Icon guid="ImageCatalogGuid" id="ControlFlow" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Function Graph Overview</ButtonText>
