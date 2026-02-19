@@ -26,9 +26,9 @@ webview SPA.
 | C          | `.c`                               |
 | C++        | `.cpp`, `.cxx`, `.cc`, `.h`, `.hpp`|
 | Go         | `.go`                              |
+| Java       | `.java`                            |
 | Python     | `.py`                              |
-| TypeScript | `.ts`                              |
-| JavaScript | `.js`                              |
+| TypeScript | `.ts`, `.tsx`                       |
 
 ## Usage
 
