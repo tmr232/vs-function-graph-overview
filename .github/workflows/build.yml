@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # ratchet:actions/checkout@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6
         with:
           repository: tmr232/function-graph-overview
           ref: "visual-studio"
@@ -37,10 +37,11 @@ jobs:
     name: Build
     runs-on: windows-latest
     needs: [build-webview]
-    permissions: {}
+    permissions:
+      contents: read
     steps:
       - name: Fetch Sources
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # ratchet:actions/checkout@v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6
         with:
           persist-credentials: false
 
