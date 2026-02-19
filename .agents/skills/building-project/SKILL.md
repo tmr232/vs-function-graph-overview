@@ -96,7 +96,8 @@ Actions workflow files.
   required assemblies for the old-style project.
 - **ProjectReference from the test project to the main project fails** because
   `dotnet build` cannot build the VSIX project. The test project uses a direct
-  DLL reference instead.
+  DLL reference instead. The solution file declares a `ProjectDependencies`
+  section so MSBuild builds the main project before the test project.
 - **Test configuration must match the main build configuration.** If you build
   Debug, test with `-c Debug`; if Release, use `-c Release`.
 
