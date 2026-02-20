@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -19,5 +18,4 @@
       <HintPath>..\FunctionGraphOverview\bin\$(Configuration)\FunctionGraphOverview.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>
