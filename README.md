@@ -11,8 +11,6 @@ Before installing, you can also try an [interactive demo](https://tmr232.github.
 
 The extension currently supports C, C++, Go, Java, Python, and TypeScript & TSX.
 
-This is a port of the [Function-Graph-Overview](https://github.com/tmr232/function-graph-overview/) to Visual Studio.
-
 ## Installation
 
 - Using the IDE built-in extension manager:
@@ -58,8 +56,9 @@ In the `Color scheme` field, you can choose between built-in color schemes
 2. Enable the `Color Picker` above the graph
 3. Select the colors you want for your color scheme
 4. Press the Copy button to copy the color scheme into the clipboard
-5. Select `Custom` in the color-scheme dropdown and paste the JSON into the text
-   field
+5. In Visual Studio, go to <kbd>Tools</kbd> > <kbd>Options</kbd> > <kbd>Function Graph Overview</kbd>
+6. Select `Custom` in the `Color scheme` dropdown and paste the JSON into the
+   `Custom color scheme` text field
 
 ### Flat Switch
 
