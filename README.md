@@ -63,7 +63,11 @@ In the `Color scheme` field, you can choose between built-in color schemes
 ### Flat Switch
 
 Use the `Flat switch` setting to change between two rendering modes for
-switch-like statements.
+switch-like statements:
+
+| Flat Switch Enabled                                | Flat Switch Disabled                                 |
+|----------------------------------------------------|------------------------------------------------------|
+| ![](media/settings/flat-switch-enabled.png)        | ![](media/settings/flat-switch-disabled.png)         |
 
 ## Supported Languages
 
