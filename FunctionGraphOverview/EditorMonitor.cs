@@ -132,9 +132,12 @@ namespace FunctionGraphOverview
             if (document == null)
                 return;
 
-            var filePath = document.FilePath;
-            var ext = Path.GetExtension(filePath);
-            if (!FunctionGraphOverview.LanguageMap.TryGetLanguage(ext, out var language))
+            if (
+                !LanguageMap.TryGetLanguageFromContentType(
+                    _currentView.TextDataModel.ContentType.TypeName,
+                    out var language
+                ) && !LanguageMap.TryGetLanguage(Path.GetExtension(document.FilePath), out language)
+            )
                 return;
 
             var snapshot = _currentView.TextSnapshot;

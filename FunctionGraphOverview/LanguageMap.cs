@@ -26,5 +26,25 @@ namespace FunctionGraphOverview
         {
             return Map.TryGetValue(extension, out language);
         }
+
+        private static readonly Dictionary<string, string> ContentTypeMap = new Dictionary<
+            string,
+            string
+        >(StringComparer.OrdinalIgnoreCase)
+        {
+            { "C/C++", "C++" },
+            { "Python", "Python" },
+            { "TypeScript", "TypeScript" },
+            { "Java", "Java" },
+            { "Go", "Go" },
+        };
+
+        public static bool TryGetLanguageFromContentType(
+            string contentTypeName,
+            out string language
+        )
+        {
+            return ContentTypeMap.TryGetValue(contentTypeName, out language);
+        }
     }
 }

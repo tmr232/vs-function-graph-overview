@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Language detection now uses Visual Studio's content type as the primary source,
+  falling back to file extensions. This enables support for extensionless files
+  such as C++ standard library headers.
 - Unit test project (`FunctionGraphOverview.Tests`) with xUnit covering
   `NavigationService.Utf8ByteOffsetToCharOffset`, `ColorSchemeDefinitions`, and
   `LanguageMap` (#8.1)

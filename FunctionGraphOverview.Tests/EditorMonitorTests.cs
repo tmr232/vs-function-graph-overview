@@ -52,5 +52,37 @@ namespace FunctionGraphOverview.Tests
                 $"Unexpected extension: {extension}"
             );
         }
+
+        [Theory]
+        [InlineData("C/C++", "C++")]
+        [InlineData("Python", "Python")]
+        [InlineData("TypeScript", "TypeScript")]
+        [InlineData("Java", "Java")]
+        [InlineData("Go", "Go")]
+        public void TryGetLanguageFromContentType_ContainsExpectedMapping(
+            string contentType,
+            string expectedLanguage
+        )
+        {
+            Assert.True(
+                LanguageMap.TryGetLanguageFromContentType(contentType, out var language),
+                $"Missing content type: {contentType}"
+            );
+            Assert.Equal(expectedLanguage, language);
+        }
+
+        [Theory]
+        [InlineData("plaintext")]
+        [InlineData("XML")]
+        [InlineData("HTML")]
+        public void TryGetLanguageFromContentType_ReturnsFalseForUnsupportedTypes(
+            string contentType
+        )
+        {
+            Assert.False(
+                LanguageMap.TryGetLanguageFromContentType(contentType, out _),
+                $"Unexpected content type: {contentType}"
+            );
+        }
     }
 }
