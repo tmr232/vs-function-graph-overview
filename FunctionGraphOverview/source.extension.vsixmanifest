@@ -2,14 +2,14 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
     <Identity Id="FunctionGraphOverview.d266b8ec-2967-4f88-8e8b-628921c26350" Version="1.0.0" Language="en-US" Publisher="Tamir Bahar" />
-    <DisplayName>Function Graph Overview</DisplayName>
+    <DisplayName>Function Graph Overview for Visual Studio</DisplayName>
     <Description>Displays a control flow graph for the function at the cursor position.</Description>
     <MoreInfo>https://github.com/tmr232/vs-function-graph-overview</MoreInfo>
     <License>LICENSE.txt</License>
     <ReleaseNotes>https://github.com/tmr232/vs-function-graph-overview/releases</ReleaseNotes>
     <Icon>Resources\icon.png</Icon>
     <PreviewImage>Resources\preview.png</PreviewImage>
-    <Tags>cfg, control flow, graph, code visualization</Tags>
+    <Tags>cfg;control flow;graph;code visualization</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
