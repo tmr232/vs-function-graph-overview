@@ -1,9 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/vsix-publish",
   "identity": {
-    "internalName": "FunctionGraphOverview",
-    "publisher": "Tamir Bahar"
+    "internalName": "vs-function-graph-overview",
+    "displayName": "Function Graph Overview for Visual Studio",
+    "publisher": "tamir-bahar"
   },
+  "private": true,
   "categories": [
     "coding"
   ],
