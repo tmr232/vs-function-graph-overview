@@ -1,9 +1,35 @@
-# Function Graph Overview — Visual Studio Extension
+# Function Graph Overview (for Visual Studio)
 
-A Visual Studio 2022 extension that displays a control flow graph (CFG) for the
-function at the cursor position. Built on the
-[function-graph-overview](https://github.com/tmr232/function-graph-overview)
-webview SPA.
+<!-- markdownlint-disable MD033 -->
+
+See live control-flow-graphs of your code!
+
+This extension adds a CFG ([Control-Flow-Graph](https://en.wikipedia.org/wiki/Control-flow_graph))
+view for the current function in Visual Studio 2022.
+
+Before installing, you can also try an [interactive demo](https://tmr232.github.io/function-graph-overview/).
+
+The extension currently supports C, C++, Go, Java, Python, and TypeScript & TSX.
+
+This is a port of the [Function-Graph-Overview](https://github.com/tmr232/function-graph-overview/) to Visual Studio.
+
+## Installation
+
+- Using the IDE built-in extension manager:
+
+  <kbd>Extensions</kbd> > <kbd>Manage Extensions</kbd> > <kbd>Search for "Function Graph
+  Overview"</kbd> >
+  <kbd>Install</kbd>
+
+- You can also download the `.vsix` from the
+  [latest release](https://github.com/tmr232/vs-function-graph-overview/releases)
+  and install it manually by double-clicking the file.
+
+## Getting Started
+
+1. Open the tool window via **View → Other Windows → Function Graph Overview**.
+2. Open a supported source file and place your cursor inside a function.
+3. The graph updates automatically as you move between functions or edit code.
 
 ## Features
 
@@ -12,95 +38,46 @@ webview SPA.
 - **Click-to-navigate** — click a node in the graph to jump to the
   corresponding source location.
 - **Color scheme** — choose between Dark, Light, System (follows IDE theme), or
-  Custom (paste your own color scheme JSON) via Tools → Options → Function Graph
-  Overview. Dark and Light schemes use the canonical
-  [function-graph-overview](https://github.com/tmr232/function-graph-overview)
-  colors with VS-appropriate backgrounds.
+  Custom (paste your own color scheme JSON).
 - **Configurable** — toggle simplification, flat switch rendering, and current
-  node highlighting via Tools → Options → Function Graph Overview.
+  node highlighting.
+
+All settings are available under <kbd>Tools</kbd> > <kbd>Options</kbd> > <kbd>Function Graph Overview</kbd>.
+
+## Settings
+
+### Color Scheme
+
+To change the color scheme of the CFG, open the settings and go to
+<kbd>Tools</kbd> > <kbd>Options</kbd> > <kbd>Function Graph Overview</kbd>.
+
+In the `Color scheme` field, you can choose between built-in color schemes
+(`Dark`, `Light`, `System`), or create your own:
+
+1. Open the [interactive demo](https://tmr232.github.io/function-graph-overview/)
+2. Enable the `Color Picker` above the graph
+3. Select the colors you want for your color scheme
+4. Press the Copy button to copy the color scheme into the clipboard
+5. Select `Custom` in the color-scheme dropdown and paste the JSON into the text
+   field
+
+### Flat Switch
+
+Use the `Flat switch` setting to change between two rendering modes for
+switch-like statements.
 
 ## Supported Languages
 
-| Language   | Extensions                         |
-|------------|------------------------------------|
-| C          | `.c`                               |
-| C++        | `.cpp`, `.cxx`, `.cc`, `.h`, `.hpp`|
-| Go         | `.go`                              |
-| Java       | `.java`                            |
-| Python     | `.py`                              |
-| TypeScript | `.ts`, `.tsx`                       |
+| Language   | Extensions                          |
+|------------|-------------------------------------|
+| C          | `.c`                                |
+| C++        | `.cpp`, `.cxx`, `.cc`, `.h`, `.hpp` |
+| Go         | `.go`                               |
+| Java       | `.java`                             |
+| Python     | `.py`                               |
+| TypeScript | `.ts`, `.tsx`                        |
 
-## Usage
+## Contributing
 
-1. Open the tool window via **View → Other Windows → Function Graph Overview**.
-2. Open a supported source file and place your cursor inside a function.
-3. The graph updates automatically as you move between functions or edit code.
-
-## Architecture
-
-The extension hosts a WebView2 control that runs the function-graph-overview
-Svelte SPA locally. The C# host monitors editor events and communicates with the
-webview via `ExecuteScriptAsync` (C# → JS) and `WebMessageReceived` (JS → C#).
-
-```
-┌──────────────────────────────────────────────┐
-│            Visual Studio 2022                │
-│  ┌────────────────────────────────────────┐  │
-│  │  EditorMonitor   ThemeMonitor          │  │
-│  │       │               │                │  │
-│  │       ▼               ▼                │  │
-│  │     WebviewBridge (ExecuteScriptAsync)  │  │
-│  │              │                         │  │
-│  │     ┌────────▼──────────────────────┐  │  │
-│  │     │  WebView2 (Svelte SPA)       │  │  │
-│  │     │  Tree-Sitter → CFG → SVG     │  │  │
-│  │     └───────────────────────────────┘  │  │
-│  └────────────────────────────────────────┘  │
-└──────────────────────────────────────────────┘
-```
-
-## Building
-
-Requires Visual Studio 2022 with the **Visual Studio extension development**
-workload installed.
-
-1. Open `vs-function-graph-overview.sln` in Visual Studio 2022.
-2. Build the solution (Ctrl+Shift+B).
-3. Press F5 to launch the Experimental Instance with the extension loaded.
-
-### Updating Webview Assets
-
-The `FunctionGraphOverview/WebviewAssets/` directory contains pre-built files
-from the [function-graph-overview](https://github.com/tmr232/function-graph-overview)
-project. To update them:
-
-1. Clone and build the webview project (`bun run build-webview`).
-2. Copy the contents of `dist/webview/assets/` into `WebviewAssets/assets/`.
-
-## CI / CD
-
-GitHub Actions workflows live in `.github/workflows/`:
-
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| `build.yml` | Push to `main`, PRs | Builds the webview from [function-graph-overview](https://github.com/tmr232/function-graph-overview) and compiles the VSIX |
-| `release.yml` | GitHub release published | Builds, publishes to the VS Marketplace, and uploads the VSIX as a release asset |
-
-The webview is checked out from a dedicated `visualstudio-*` tag in the
-function-graph-overview repo (mirroring the `jetbrains-*` tags used by the
-[JetBrains plugin](https://github.com/tmr232/jb-function-graph-overview)).
-
-### Workflow security
-
-- **[ratchet](https://github.com/sethvargo/ratchet)** — all action references
-  are pinned to commit SHAs (with version comments for readability).
-  Run `ratchet pin <workflow>` after adding or updating an action.
-- **[zizmor](https://github.com/zizmorcore/zizmor)** — static analysis for
-  GitHub Actions. Runs as a [pre-commit](https://pre-commit.com/) hook via
-  [zizmor-pre-commit](https://github.com/zizmorcore/zizmor-pre-commit) to catch
-  issues like unpinned actions, excessive permissions, and template injection.
-
-### Code formatting
-
-- **[CSharpier](https://csharpier.com/)** — opinionated C# formatter, runs as a
-  pre-commit hook via `dotnet tool run csharpier`.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions, architecture
+overview, and development workflow.
