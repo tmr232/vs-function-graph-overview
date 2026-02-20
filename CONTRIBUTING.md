@@ -64,7 +64,28 @@ function-graph-overview repo (mirroring the `jetbrains-*` tags used by the
   [zizmor-pre-commit](https://github.com/zizmorcore/zizmor-pre-commit) to catch
   issues like unpinned actions, excessive permissions, and template injection.
 
-### Code formatting
+## Pre-commit Hooks
 
-- **[CSharpier](https://csharpier.com/)** — opinionated C# formatter, runs as a
-  pre-commit hook via `dotnet tool run csharpier`.
+The repo uses [pre-commit](https://pre-commit.com/) hooks (configured in
+`.pre-commit-config.yaml`) to enforce code quality on every commit:
+
+| Hook | What it does |
+|------|-------------|
+| `zizmor` | Static analysis for GitHub Actions workflows |
+| `dotnet-tool-restore` | Restores .NET tools (runs before CSharpier) |
+| `csharpier` | Opinionated C# formatter |
+
+### Setup
+
+Install and activate the hooks using [prek](https://prek.j178.dev/), a fast,
+single-binary runner for pre-commit hooks:
+
+```bash
+prek install
+```
+
+Once installed, hooks run automatically on `git commit`. To run them manually:
+
+```bash
+prek run --all-files
+```
