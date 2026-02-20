@@ -64,6 +64,19 @@ function-graph-overview repo (mirroring the `jetbrains-*` tags used by the
   [zizmor-pre-commit](https://github.com/zizmorcore/zizmor-pre-commit) to catch
   issues like unpinned actions, excessive permissions, and template injection.
 
+## Debugging
+
+### Extension Logs
+
+The extension writes diagnostic messages to a dedicated Output Window pane. To
+view them:
+
+1. Open **View → Output** (or <kbd>Ctrl+Alt+O</kbd>).
+2. In the **Show output from** dropdown, select **Function Graph Overview**.
+
+Errors from webview message handling and background tasks are logged here
+automatically.
+
 ## Pre-commit Hooks
 
 The repo uses [pre-commit](https://pre-commit.com/) hooks (configured in
