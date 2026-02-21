@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # ratchet:actions/checkout@v4
         with:
           repository: tmr232/function-graph-overview
-          ref: "visualstudio-0.0.1"
+          ref: "visualstudio-1.0.1"
           persist-credentials: false
 
       - uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # ratchet:oven-sh/setup-bun@v2
