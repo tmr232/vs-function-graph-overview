@@ -20,6 +20,7 @@ namespace FunctionGraphOverview
             { ".py", "Python" },
             { ".ts", "TypeScript" },
             { ".tsx", "TSX" },
+            { ".cs", "C#" },
         };
 
         public static bool TryGetLanguage(string extension, out string language)
@@ -37,6 +38,7 @@ namespace FunctionGraphOverview
             { "TypeScript", "TypeScript" },
             { "Java", "Java" },
             { "Go", "Go" },
+            { "CSharp", "C#" },
         };
 
         public static bool TryGetLanguageFromContentType(
