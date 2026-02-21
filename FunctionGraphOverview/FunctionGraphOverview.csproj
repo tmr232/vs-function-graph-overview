@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project
-  ToolsVersion="15.0"
-  DefaultTargets="Build"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
->
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''"
-      >$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath
-    >
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <Import
-    Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
-    Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"
-  />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -78,6 +69,15 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="WebviewAssets\assets\tree-sitter-c.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-cpp.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-c_sharp.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-go.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-java.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-python.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-tsx.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter-typescript.wasm" />
+    <None Include="WebviewAssets\assets\tree-sitter.wasm" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -93,11 +93,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference
-      Include="Microsoft.VisualStudio.SDK"
-      Version="17.12.40392"
-      ExcludeAssets="runtime"
-    >
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.12.40392" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK.Analyzers" Version="17.7.98">
@@ -116,6 +112,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="WebviewAssets\assets\index.css" />
+    <Content Include="WebviewAssets\assets\index.js" />
+    <Content Include="WebviewAssets\assets\__vite-browser-external.js" />
+    <Content Include="WebviewAssets\favicon.png" />
+    <Content Include="WebviewAssets\index.html" />
     <VSCTCompile Include="FunctionGraphOverviewPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
@@ -137,10 +138,7 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import
-    Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets"
-    Condition="'$(VSToolsPath)' != ''"
-  />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
