@@ -7,7 +7,7 @@ view for the current function in Visual Studio 2022.
 
 Before installing, you can also try an [interactive demo](https://tmr232.github.io/function-graph-overview/).
 
-The extension currently supports C, C++, Go, Java, Python, and TypeScript & TSX.
+The extension currently supports C, C++, C#, Go, Java, Python, Javascript, TypeScript & TSX.
 
 
 ![A docked CFG View](FunctionGraphOverview/Resources/preview.png)

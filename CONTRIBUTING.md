@@ -9,14 +9,31 @@ workload installed.
 2. Build the solution (Ctrl+Shift+B).
 3. Press F5 to launch the Experimental Instance with the extension loaded.
 
-### Updating Webview Assets
+### Building Webview Assets
 
-The `FunctionGraphOverview/WebviewAssets/` directory contains pre-built files
-from the [function-graph-overview](https://github.com/tmr232/function-graph-overview)
-project. To update them:
+The `FunctionGraphOverview/WebviewAssets/` directory is **not checked in** — you
+must build it locally before running the extension. The assets come from the
+[function-graph-overview](https://github.com/tmr232/function-graph-overview) project.
 
-1. Clone and build the webview project (`bun run build-webview`).
-2. Copy the contents of `dist/webview/assets/` into `WebviewAssets/assets/`.
+1. Clone the webview project and check out the matching tag:
+   ```bash
+   git clone https://github.com/tmr232/function-graph-overview.git
+   cd function-graph-overview
+   git checkout visualstudio-1.0.1
+   ```
+2. Install dependencies and build:
+   ```bash
+   bun install
+   bun build-webview
+   ```
+3. Copy the output into this repo:
+   ```bash
+   cp -r dist/webview/ /path/to/vs-function-graph-overview/FunctionGraphOverview/WebviewAssets/
+   ```
+
+CI builds the webview automatically (see `build-webview` job in
+`.github/workflows/build.yml`), so this step is only needed for local
+development.
 
 ## Architecture
 
