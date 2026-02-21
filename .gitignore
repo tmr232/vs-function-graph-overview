@@ -398,3 +398,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Webview build output (built from https://github.com/tmr232/function-graph-overview)
+FunctionGraphOverview/WebviewAssets/
