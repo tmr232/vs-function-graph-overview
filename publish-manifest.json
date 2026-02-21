@@ -3,8 +3,8 @@
   "identity": {
     "internalName": "vs-function-graph-overview",
     "displayName": "Function Graph Overview for Visual Studio",
-    "publisher": "tamir-bahar"
   },
+  "publisher": "tamir-bahar",
   "private": true,
   "categories": [
     "coding"
