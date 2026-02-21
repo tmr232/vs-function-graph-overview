@@ -1,7 +1,5 @@
 # Function Graph Overview (for Visual Studio)
 
-<!-- markdownlint-disable MD033 -->
-
 See live control-flow-graphs of your code!
 
 This extension adds a CFG ([Control-Flow-Graph](https://en.wikipedia.org/wiki/Control-flow_graph))
@@ -10,6 +8,12 @@ view for the current function in Visual Studio 2022.
 Before installing, you can also try an [interactive demo](https://tmr232.github.io/function-graph-overview/).
 
 The extension currently supports C, C++, Go, Java, Python, and TypeScript & TSX.
+
+
+![A docked CFG View](FunctionGraphOverview/Resources/preview.png)
+
+
+This is a port of the [Function-Graph-Overview](https://github.com/tmr232/function-graph-overview/) to Visual Studio.
 
 ## Installation
 
@@ -25,7 +29,7 @@ The extension currently supports C, C++, Go, Java, Python, and TypeScript & TSX.
 
 ## Getting Started
 
-1. Open the tool window via **View → Other Windows → Function Graph Overview**.
+1. Open the tool window via <kbd>View</kbd> > <kbd>Other Windows</kbd> > <kbd>Function Graph Overview</kbd>.
 2. Open a supported source file and place your cursor inside a function.
 3. The graph updates automatically as you move between functions or edit code.
 
@@ -69,16 +73,6 @@ switch-like statements:
 |----------------------------------------------------|------------------------------------------------------|
 | ![](media/settings/flat-switch-enabled.png)        | ![](media/settings/flat-switch-disabled.png)         |
 
-## Supported Languages
-
-| Language   | Extensions                          |
-|------------|-------------------------------------|
-| C          | `.c`                                |
-| C++        | `.cpp`, `.cxx`, `.cc`, `.h`, `.hpp` |
-| Go         | `.go`                               |
-| Java       | `.java`                             |
-| Python     | `.py`                               |
-| TypeScript | `.ts`, `.tsx`                        |
 
 ## Contributing
 
